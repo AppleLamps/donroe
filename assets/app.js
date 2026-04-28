@@ -4,7 +4,13 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-  const articleHref = (article) => `article.html?slug=${encodeURIComponent(article.slug)}`;
+  const isStaticArticlePage = () => document.body.dataset.page === "article" && window.location.pathname.includes("/articles/");
+  const articleHref = (article) => {
+    if (article.canonicalPath) {
+      return `${isStaticArticlePage() ? "../../" : ""}${article.canonicalPath}`;
+    }
+    return `${isStaticArticlePage() ? "../../" : ""}article.html?slug=${encodeURIComponent(article.slug)}`;
+  };
   const escapeHtml = (value) =>
     String(value || "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;",
@@ -38,6 +44,10 @@
     return article.categories.map((category) => `<span>${escapeHtml(category)}</span>`).join("");
   }
 
+  function keyPointsHtml(article) {
+    return (article.keyPoints || []).map((point) => `<li>${escapeHtml(point)}</li>`).join("");
+  }
+
   function initForms() {
     $$("form[data-form]").forEach((form) => {
       form.addEventListener("submit", (event) => {
@@ -46,7 +56,9 @@
         const type = form.dataset.form;
         form.reset();
         if (status) {
-          status.textContent = type === "contact" ? "Filed. Thank you for the note." : "Filed. You are on the list.";
+          status.textContent = type === "contact"
+            ? "Filed. Thank you for the note."
+            : "Filed. One email per new dispatch.";
         }
       });
     });
@@ -88,7 +100,7 @@
     const link = $('[data-slot="featured-link"]');
     if (link) link.href = articleHref(featured);
 
-    setHtml("featured-points", featured.keyPoints.map((point) => `<li>${escapeHtml(point)}</li>`).join(""));
+    setHtml("featured-points", keyPointsHtml(featured));
 
     setHtml("latest-table", `
       <div class="ledger-head" aria-hidden="true">
@@ -110,6 +122,7 @@
     const filters = $('[data-slot="category-filters"]');
     const list = $('[data-slot="archive-list"]');
     const count = $('[data-slot="result-count"]');
+    const frontSummary = $('[data-slot="front-summary"]');
     if (!search || !filters || !list || !count) return;
 
     const categories = ["All", ...new Set(articles.flatMap((article) => article.categories))].sort((a, b) => {
@@ -122,6 +135,20 @@
     filters.innerHTML = categories.map((category) => `
       <button type="button" data-category="${escapeHtml(category)}" aria-pressed="${category === "All"}">${escapeHtml(category)}</button>
     `).join("");
+
+    if (frontSummary) {
+      const seriesCounts = articles.reduce((acc, article) => {
+        acc[article.series] = (acc[article.series] || 0) + 1;
+        return acc;
+      }, {});
+      frontSummary.innerHTML = Object.entries(seriesCounts).map(([series, total]) => `
+        <article>
+          <span>${escapeHtml(series)}</span>
+          <strong>${total}</strong>
+          <small>${total === 1 ? "dispatch" : "dispatches"}</small>
+        </article>
+      `).join("");
+    }
 
     const render = () => {
       const query = search.value.trim().toLowerCase();
@@ -192,7 +219,7 @@
   function initArticle() {
     if (!articles.length) return;
     const params = new URLSearchParams(window.location.search);
-    const requestedSlug = params.get("slug");
+    const requestedSlug = params.get("slug") || document.body.dataset.articleSlug || window.location.pathname.match(/\/articles\/([^/]+)\/?/)?.[1];
     const article = articles.find((item) => item.slug === requestedSlug) || articles[0];
 
     document.title = `${article.title} | The Donroe Dossier`;
@@ -206,15 +233,25 @@
     const body = $('[data-slot="article-body"]');
     const toc = $('[data-slot="toc"]');
     const headings = [];
-    if (body) {
+    const hasStaticArticleBody = body && body.children.length > 0;
+    if (body && !hasStaticArticleBody) {
       body.innerHTML = article.content.map((block, index) => renderArticleBlock(block, index, headings)).join("");
+    } else if (body) {
+      $$("h2, h3", body).forEach((heading) => {
+        if (heading.id) headings.push({ id: heading.id, text: heading.textContent, kind: heading.tagName.toLowerCase() });
+      });
     }
 
-    if (toc) {
+    if (toc && !toc.children.length) {
       toc.innerHTML = headings.length
         ? `<p class="section-label">Sections</p>${headings.slice(0, 12).map((heading) => `<a href="#${heading.id}">${escapeHtml(heading.text)}</a>`).join("")}`
         : "";
     }
+
+    setHtml("article-key-points", keyPointsHtml(article));
+    setText("article-word-count", article.wordCount.toLocaleString());
+    setText("article-read-time", `${article.readMinutes} min`);
+    setText("article-series-position", getSeriesPosition(article));
 
     const related = articles
       .filter((item) => item.slug !== article.slug && item.categories.some((category) => article.categories.includes(category)))
@@ -227,7 +264,26 @@
       </a>
     `).join(""));
 
+    renderAdjacent(article);
+
     initReaderTools();
+  }
+
+  function getSeriesPosition(article) {
+    const seriesItems = articles.filter((item) => item.series === article.series);
+    const index = seriesItems.findIndex((item) => item.slug === article.slug);
+    return index >= 0 ? `${article.series} ${index + 1}/${seriesItems.length}` : article.series;
+  }
+
+  function renderAdjacent(article) {
+    const container = $('[data-slot="article-adjacent"]');
+    if (!container || container.children.length) return;
+    const renderLink = (slug, label) => {
+      const target = articles.find((item) => item.slug === slug);
+      if (!target) return `<span class="adjacent-link muted-link"><small>${label}</small><strong>End of file</strong></span>`;
+      return `<a class="adjacent-link" href="${articleHref(target)}"><small>${label}</small><strong>${escapeHtml(target.title)}</strong></a>`;
+    };
+    container.innerHTML = `${renderLink(article.previousSlug, "Previous file")}${renderLink(article.nextSlug, "Next file")}`;
   }
 
   function initReaderTools() {

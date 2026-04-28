@@ -1,6 +1,6 @@
 # The Donroe Dossier
 
-A static responsive article archive built from the text files in `articles/`.
+A static responsive article archive built from the text files in `articles/`. The build generates both browser data and canonical static article pages.
 
 ## Add or update articles
 
@@ -13,14 +13,14 @@ A static responsive article archive built from the text files in `articles/`.
 npm run prepare:articles
 ```
 
-The site reads from `assets/articles.js`, which is generated from the source text files.
+The site reads from `assets/articles.js`, which is generated from the source text files. `npm run build` also emits one static article page per story at `dist/articles/<slug>/index.html`; `article.html?slug=...` remains as a fallback reader.
 
 ## Preview locally
 
 Any static file server works. From the project root:
 
 ```powershell
-python -m http.server 4173
+python -m http.server 4173 -d dist
 ```
 
 Then open `http://localhost:4173`.

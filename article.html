@@ -40,6 +40,24 @@
 
         <div class="article-layout">
           <aside class="reader-rail" aria-label="Reading tools">
+            <div class="rail-block case-file">
+              <p class="section-label">Case file</p>
+              <dl>
+                <div>
+                  <dt>Series</dt>
+                  <dd data-slot="article-series-position">Open file</dd>
+                </div>
+                <div>
+                  <dt>Words</dt>
+                  <dd data-slot="article-word-count">0</dd>
+                </div>
+                <div>
+                  <dt>Read</dt>
+                  <dd data-slot="article-read-time">0 min</dd>
+                </div>
+              </dl>
+              <ul class="check-list" data-slot="article-key-points"></ul>
+            </div>
             <div class="rail-block">
               <p class="section-label">Reader</p>
               <div class="reader-tools" role="group" aria-label="Text size">
@@ -56,6 +74,8 @@
           <div class="article-body" data-slot="article-body"></div>
         </div>
       </article>
+
+      <nav class="article-adjacent" aria-label="Article navigation" data-slot="article-adjacent"></nav>
 
       <section class="related-section" aria-labelledby="related-title">
         <div class="section-heading">
