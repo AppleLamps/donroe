@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Article | The Donroe Dossier</title>
+    <meta name="description" content="Read a long-form article from The Donroe Dossier.">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="article">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="read-progress" aria-hidden="true"></div>
+
+    <header class="site-masthead compact">
+      <div class="top-rule">
+        <p>Dispatch reader</p>
+        <p>Independent commentary desk</p>
+        <p data-slot="reader-dossier">Open file</p>
+      </div>
+      <div class="brand-center compact-brand">
+        <a class="masthead-title" href="index.html">The Donroe Dossier</a>
+      </div>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="articles.html">Articles</a>
+        <a href="about.html">About</a>
+        <a href="index.html#subscribe">Subscribe</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell article-page">
+      <article class="article-shell">
+        <header class="article-header">
+          <p class="section-label" data-slot="article-series">Dispatch</p>
+          <h1 data-slot="article-title">Loading article</h1>
+          <p class="article-dek" data-slot="article-dek"></p>
+          <div class="article-meta" data-slot="article-meta"></div>
+          <div class="tag-row" data-slot="article-tags"></div>
+        </header>
+
+        <div class="article-layout">
+          <aside class="reader-rail" aria-label="Reading tools">
+            <div class="rail-block">
+              <p class="section-label">Reader</p>
+              <div class="reader-tools" role="group" aria-label="Text size">
+                <button type="button" data-reader-size="standard" aria-pressed="true">A</button>
+                <button type="button" data-reader-size="large" aria-pressed="false">A+</button>
+              </div>
+              <button type="button" class="utility-button" data-action="copy-link">Copy link</button>
+              <button type="button" class="utility-button" data-action="print">Print</button>
+              <p class="form-status" role="status" aria-live="polite" data-slot="reader-status"></p>
+            </div>
+            <nav class="toc rail-block" aria-label="Article sections" data-slot="toc"></nav>
+          </aside>
+
+          <div class="article-body" data-slot="article-body"></div>
+        </div>
+      </article>
+
+      <section class="related-section" aria-labelledby="related-title">
+        <div class="section-heading">
+          <p class="section-label" id="related-title">Related dispatches</p>
+          <a class="text-link" href="articles.html">Back to archive -&gt;</a>
+        </div>
+        <div class="related-list" data-slot="related-list"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>The Donroe Dossier</p>
+      <p><a href="about.html#contact">Contact</a> / <a href="index.html#subscribe">Subscribe</a></p>
+    </footer>
+
+    <script src="assets/articles.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About | The Donroe Dossier</title>
+    <meta name="description" content="About the editorial desk, contact, and subscription options for The Donroe Dossier.">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="about">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="read-progress" aria-hidden="true"></div>
+
+    <header class="site-masthead compact">
+      <div class="top-rule">
+        <p>About the desk</p>
+        <p>Independent commentary desk</p>
+        <p>Contact and subscription</p>
+      </div>
+      <div class="brand-center compact-brand">
+        <a class="masthead-title" href="index.html">The Donroe Dossier</a>
+      </div>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="articles.html">Articles</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="#contact">Subscribe</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell">
+      <section class="about-hero" aria-labelledby="about-title">
+        <p class="section-label">Mission</p>
+        <h1 id="about-title">An archive for arguments that should survive the news cycle.</h1>
+        <p>The desk follows the public record across politics, theology, law, media, and geopolitics. Each essay is arranged for readers who want the claim, the evidence, and the consequence in one place.</p>
+      </section>
+
+      <section class="about-grid" aria-label="Editorial commitments">
+        <article>
+          <p class="section-label">01</p>
+          <h2>Claims need a chain of custody.</h2>
+          <p>Every serious argument has a source trail. The work here is to keep that trail visible enough for readers to test it.</p>
+        </article>
+        <article>
+          <p class="section-label">02</p>
+          <h2>Institutions are part of the story.</h2>
+          <p>The site tracks the machinery that turns events into narratives: courts, churches, media outlets, agencies, caucuses, and alliances.</p>
+        </article>
+        <article>
+          <p class="section-label">03</p>
+          <h2>Long form is a discipline.</h2>
+          <p>The format makes room for context, contradiction, and receipts. A clean archive matters because the argument is bigger than the day it appears.</p>
+        </article>
+      </section>
+
+      <section id="contact" class="contact-section" aria-labelledby="contact-title">
+        <div>
+          <p class="section-label">Contact</p>
+          <h2 id="contact-title">Send a note or join the list.</h2>
+          <p>General inquiries, corrections, tips, and subscription requests can start here.</p>
+          <dl class="contact-list">
+            <div>
+              <dt>General</dt>
+              <dd><a href="mailto:desk@donroedossier.com">desk@donroedossier.com</a></dd>
+            </div>
+            <div>
+              <dt>Secure submissions</dt>
+              <dd><a href="mailto:tips@donroedossier.com">tips@donroedossier.com</a></dd>
+            </div>
+          </dl>
+        </div>
+        <form class="contact-form" data-form="contact">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required>
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required>
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="5" required></textarea>
+          <button type="submit">Send note</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>The Donroe Dossier</p>
+      <p><a href="articles.html">Archive</a> / <a href="index.html#subscribe">Subscribe</a></p>
+    </footer>
+
+    <script src="assets/articles.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

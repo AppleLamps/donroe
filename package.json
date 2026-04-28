@@ -1,0 +1,10 @@
+{
+  "name": "donroe-dossier",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-articles.mjs",
+    "prepare:articles": "node tools/build-articles.mjs --no-dist"
+  }
+}

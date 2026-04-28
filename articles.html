@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Articles | The Donroe Dossier</title>
+    <meta name="description" content="Search and filter the article archive by category, series, and title.">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="articles">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="read-progress" aria-hidden="true"></div>
+
+    <header class="site-masthead compact">
+      <div class="top-rule">
+        <p>Archive ledger</p>
+        <p>Independent commentary desk</p>
+        <p>Search the record</p>
+      </div>
+      <div class="brand-center compact-brand">
+        <a class="masthead-title" href="index.html">The Donroe Dossier</a>
+      </div>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="articles.html" aria-current="page">Articles</a>
+        <a href="about.html">About</a>
+        <a href="index.html#subscribe">Subscribe</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell">
+      <section class="archive-header" aria-labelledby="archive-title">
+        <p class="section-label">Article listing</p>
+        <h1 id="archive-title">The archive is a ledger, not a feed.</h1>
+        <p>The archive is arranged by front, series, and the evidence trail each essay follows.</p>
+      </section>
+
+      <section class="archive-tools" aria-label="Archive controls">
+        <label for="article-search">Search archive</label>
+        <input id="article-search" type="search" placeholder="Search articles, fronts, or categories" autocomplete="off" data-control="search">
+        <div class="filter-bar" data-slot="category-filters" aria-label="Category filters"></div>
+      </section>
+
+      <section class="archive-results" aria-live="polite" aria-labelledby="results-title">
+        <div class="section-heading">
+          <p class="section-label" id="results-title">Dispatches</p>
+          <p data-slot="result-count">0 articles</p>
+        </div>
+        <div class="archive-list" data-slot="archive-list"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>The Donroe Dossier</p>
+      <p><a href="about.html#contact">Contact</a> / <a href="index.html#subscribe">Subscribe</a></p>
+    </footer>
+
+    <script src="assets/articles.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
